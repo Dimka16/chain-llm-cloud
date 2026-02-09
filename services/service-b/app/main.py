@@ -39,7 +39,7 @@ async def invoke(req: InvokeReq):
             short_prompt = req.prompt[:1200]
             r = await client.post(
                 f"{OLLAMA_URL}/api/generate",
-                json={"model": MODEL, "prompt": short_prompt, "stream": False, "options": {"num_predict": 60, "temperature": 0.2,}, },
+                json={"model": MODEL, "prompt": short_prompt, "stream": False, "options": {"num_predict": 40, "num_ctx": 1024, "temperature": 0.2,}, },
             )
             r.raise_for_status()
             data = r.json()
