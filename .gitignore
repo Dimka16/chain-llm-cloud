@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.DS_Store
+.idea/
+.vscode/
+results/
+
+# logs
+**/logs/
+**/*.jsonl
+**/*.csv
+results/
