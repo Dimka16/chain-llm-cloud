@@ -12,7 +12,7 @@ services:
     container_name: service-a-api
     environment:
       - OLLAMA_URL=http://ollama:11434
-      - OLLAMA_MODEL_A=phi3:mini
+      - OLLAMA_MODEL_A=tinyllama
       - REMOTE_B_URL=http://host.docker.internal:8002/invoke
       - MIN_PROCESS_SECONDS=0
       - LOG_PATH=/logs/requests.jsonl

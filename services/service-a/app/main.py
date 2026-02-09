@@ -46,6 +46,7 @@ async def chain(req: ChainReq):
                     "stream": False,
                     "options": {
                         "num_predict": 20,
+                        "num_ctx": 512,
                         "temperature": 0.2,
                     },
                 },
