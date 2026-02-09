@@ -1,0 +1,26 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-b
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_b:/root/.ollama
+
+  api:
+    build: .
+    container_name: service-b-api
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_MODEL=phi3:mini
+      - MIN_PROCESS_SECONDS=5
+      - LOG_PATH=/logs/requests.jsonl
+    volumes:
+      - ./logs:/logs
+    ports:
+      - "8002:8000"
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_b:
