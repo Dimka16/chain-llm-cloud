@@ -1,0 +1,27 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-a
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_a:/root/.ollama
+
+  api:
+    build: .
+    container_name: service-a-api
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_MODEL_A=phi3:mini
+      - REMOTE_B_URL=http://host.docker.internal:8002/invoke
+      - MIN_PROCESS_SECONDS=0
+      - LOG_PATH=/logs/requests.jsonl
+    volumes:
+      - ./logs:/logs
+    ports:
+      - "8001:8000"
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_a:
