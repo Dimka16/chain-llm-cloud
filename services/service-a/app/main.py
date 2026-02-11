@@ -34,10 +34,9 @@ async def chain(req: ChainReq):
 
     t0 = time.perf_counter()
 
-    # Step 1: local LLM A (keep it fast)
     t1 = time.perf_counter()
     try:
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=300) as client:
             ra = await client.post(
                 f"{OLLAMA_URL}/api/generate",
                 json={
@@ -67,10 +66,9 @@ async def chain(req: ChainReq):
     a_elapsed = time.perf_counter() - t1
     a_text = da.get("response", "")
 
-    # Step 2: remote LLM B
     t2 = time.perf_counter()
     try:
-        async with httpx.AsyncClient(timeout=180) as client:
+        async with httpx.AsyncClient(timeout=300) as client:
             rb = await client.post(REMOTE_B_URL, json={"prompt": req.prompt})
             rb.raise_for_status()
             db = rb.json()
@@ -86,10 +84,6 @@ async def chain(req: ChainReq):
         raise HTTPException(status_code=502, detail=f"remote(B) error: {e}")
 
     b_elapsed = time.perf_counter() - t2
-
-    #elapsed = time.perf_counter() - t0
-    #if elapsed < MIN_PROCESS_SECONDS:
-    #    time.sleep(MIN_PROCESS_SECONDS - elapsed)
 
     total = time.perf_counter() - t0
 
