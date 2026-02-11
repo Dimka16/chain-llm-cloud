@@ -2,6 +2,7 @@ import os
 import time
 import json
 import pathlib
+import socket
 from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -26,7 +27,7 @@ class InvokeReq(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"ok": True, "service": "b"}
+    return {"ok": True, "service": "b", "host": socket.gethostname()}
 
 @app.post("/invoke")
 async def invoke(req: InvokeReq):
@@ -69,4 +70,5 @@ async def invoke(req: InvokeReq):
             "ollama_seconds": elapsed,
             "total_seconds": total,
         },
+        "host": socket.gethostname(),
     }
