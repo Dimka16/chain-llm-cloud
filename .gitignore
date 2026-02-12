@@ -7,7 +7,6 @@ __pycache__/
 .vscode/
 results/
 
-# logs
 **/logs/
 **/*.jsonl
 **/*.csv
