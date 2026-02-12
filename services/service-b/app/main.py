@@ -3,6 +3,7 @@ import time
 import json
 import pathlib
 import socket
+import asyncio
 from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -50,7 +51,7 @@ async def invoke(req: InvokeReq):
 
     elapsed = time.perf_counter() - t0
     if elapsed < MIN_PROCESS_SECONDS:
-        time.sleep(MIN_PROCESS_SECONDS - elapsed)
+        await asyncio.sleep(MIN_PROCESS_SECONDS - elapsed)
 
     total = time.perf_counter() - t0
     log_event({
