@@ -1,13 +1,18 @@
+# Python
 __pycache__/
 *.pyc
 .venv/
-.env
-.DS_Store
-.idea/
-.vscode/
-results/
+venv/
 
-**/logs/
-**/*.jsonl
-**/*.csv
+# Results / large artifacts
 results/
+*.rar
+*.zip
+
+# Figures generated locally (optional: ignore if you don't want to commit them)
+# figures/
+
+# OS
+.DS_Store
+Thumbs.db
+
